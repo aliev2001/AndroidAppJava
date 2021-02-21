@@ -7,10 +7,12 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 
-import androidx.appcompat.widget.AppCompatImageView;
 
+import com.example.ass4.R;
 
-public class LetterImageView extends AppCompatImageView {
+import java.util.Random;
+
+public class LetterImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     private char mLetter;
     private Paint mTextPaint;
@@ -28,6 +30,7 @@ public class LetterImageView extends AppCompatImageView {
         mTextPaint.setColor(mTextColor);
         mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBackgroundPaint.setStyle(Paint.Style.FILL);
+        mBackgroundPaint.setColor(randomColor());
     }
 
     public char getLetter() {
@@ -74,7 +77,7 @@ public class LetterImageView extends AppCompatImageView {
             mTextPaint.getTextBounds(String.valueOf(mLetter), 0, 1, textBounds);
             float textWidth = mTextPaint.measureText(String.valueOf(mLetter));
             float textHeight = textBounds.height();
-
+            // Draw the text
             canvas.drawText(String.valueOf(mLetter), canvas.getWidth() / 2f - textWidth / 2f,
                     canvas.getHeight() / 2f + textHeight / 2f, mTextPaint);
         }
@@ -84,4 +87,11 @@ public class LetterImageView extends AppCompatImageView {
 
         return 8 * getResources().getDisplayMetrics().density;
     }
+
+    private int randomColor() {
+        Random random = new Random();
+        String[] colorsArr = getResources().getStringArray(R.array.colors);
+        return Color.parseColor(colorsArr[random.nextInt(colorsArr.length)]);
+    }
+
 }
